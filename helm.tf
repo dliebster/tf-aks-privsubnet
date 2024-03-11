@@ -4,7 +4,7 @@ resource "helm_release" "argocd" {
   chart            = "argo-cd"
   namespace        = "argocd"
   create_namespace = true
-  version          = "3.35.4"
+  version          = "6.6.0"
   values           = [file("./conf/argocd_helm.yaml")]
 }
 # helm install argocd -n argocd -f values/argocd.yaml

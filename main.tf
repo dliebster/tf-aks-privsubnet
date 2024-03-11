@@ -36,13 +36,15 @@ resource "azurerm_kubernetes_cluster" "dl-dev" {
     type = "SystemAssigned"
   }
 
-  private_cluster_enabled = true
+  private_cluster_enabled = false
+  api_server_access_profile {
+    authorized_ip_ranges  = [ "${var.api_access_range}"]
+  }
 }
-
 resource "azurerm_kubernetes_cluster_node_pool" "user" {
   name                  = "dlnodes01"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.dl-dev.id
   vm_size               = "Standard_DS2_v2"
   node_count            = 1
   vnet_subnet_id        = azurerm_subnet.internal.id
-}
+  }
