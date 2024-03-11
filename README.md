@@ -1,3 +1,5 @@
-## Example: Kubernetes Cluster on an Internal Network
+#  AKS + ArgoCD on an Internal Network
 
-This example creates a Kubernetes Cluster using Managed Identity, with two node pools (a System and a User Node Pool) - both of which exist on an Internal Network.
+Creates a AKS cluster with ArgoCD, with two tiny node pools on an Internal Network.
+
+Build time is about 15 minutes, Kubernetes takes a while...
