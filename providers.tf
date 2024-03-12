@@ -8,6 +8,9 @@ terraform {
       source  = "hashicorp/helm"
       version = "= 2.12.1"
     }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+    }
   }
 }
 
@@ -21,6 +24,12 @@ data "azurerm_kubernetes_cluster" "credentials" {
   resource_group_name = azurerm_resource_group.dl-dev.name
 }
 
+provider "kubectl" {
+  host                   = azurerm_kubernetes_cluster.dl-dev.kube_config.0.host
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.dl-dev.kube_config.0.cluster_ca_certificate)
+  load_config_file       = false
+  token = yamldecode(azurerm_kubernetes_cluster.dl-dev.kube_config_raw).users[0].user.token
+}
 provider "helm" {
   kubernetes {
     host                   = data.azurerm_kubernetes_cluster.credentials.kube_config.0.host
